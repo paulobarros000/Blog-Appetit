@@ -1,0 +1,36 @@
+﻿@model BlogAppetit.Web.Models.ViewModels.LoginViewModel
+@{
+}
+
+
+
+<div class="container mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-6">
+
+            <h1 class="mb-3 h3 mt-3">Login</h1>
+
+            <form method="post">
+                <div class="mb-3">
+
+                    <label class="form-label">User</label>
+                    <input type="text" class="form-control" placeholder="User" id="username" asp-for="Username" required />
+                    <small class="form-text text-muted">Introduza o seu username</small>
+                    <span class="text-danger" asp-validation-for="Username"></span>
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" placeholder="Password" id="password" asp-for="Password" required/>
+                    <small class="form-text text-muted">Password deve conter um min. 6 caractéres, pelo menos caractér especial, número, uma letra capitalizada e uma não capitalizada </small>
+                  <br />  <span class="text-danger" asp-validation-for="Password"></span>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-outline-success"> Login </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

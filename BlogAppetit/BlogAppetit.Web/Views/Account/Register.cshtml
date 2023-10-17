@@ -1,0 +1,42 @@
+﻿@model BlogAppetit.Web.Models.ViewModels.RegisterViewModel
+@{
+}
+
+<div class="container mx-auto">
+    <div class="row justify-content-center">
+        <div class="col-6">
+
+            <h1 class="mb-3 h3 mt-3">Registar</h1>
+
+            <form method="post">
+                <div class="mb-3">
+
+                    <label class="form-label">User</label>
+                    <input type="text" class="form-control" placeholder="User" id="username" asp-for="Username"  required/>
+                    <small class="form-text text-muted">Introduza o seu username</small>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" placeholder="email@email.com" id="email" asp-for="Email" required />
+                    <small class="form-text text-muted">Introduza o seu email</small>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" placeholder="password" id="password" asp-for="Password" required/>
+                    <small class="form-text text-muted">Password deve conter um min. 6 caractéres, pelo menos caractér especial, número, uma letra capitalizada e uma não capitalizada </small>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-outline-success"> Registar </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

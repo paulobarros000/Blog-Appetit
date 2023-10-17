@@ -1,0 +1,61 @@
+﻿@model List<BlogAppetit.Web.Models.Domain.BlogPost>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="hero section">
+    <div lc-helper="background" class="container-fluid py-5 mb-4 d-flex justify-content-center" style="  background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    background-position: center;
+background-size:cover;
+background-repeat:no-repeat">
+        <div class="p-5 mb-4 lc-block col-xxl-7 col-lg-8 col-12" style=" backdrop-filter: blur(6px) saturate(102%);
+    -webkit-backdrop-filter: blur(6px) saturate(102%);
+    background-color: rgba(255, 255, 255, 0.45);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);">
+            <div class="lc-block">
+                <div editable="rich">
+                    <h2 class="fw-bolder display-3">Bem-vindo ao Blog Appetit!</h2>
+                </div>
+            </div>
+            <div class="lc-block col-md-8">
+                <div editable="rich">
+                    <p class="lead">
+                       Aqui pode encontrar e postar as melhores receitas, restaurantes, bares e muito mais para satisfazer o seu apetite e curiosidade.
+                       Bem vindo à comunidade
+                    </p>
+                </div>
+            </div>
+            <div class="lc-block">
+                <a class="btn btn-dark" asp-controller="BlogPosts" asp-action="Add" role="button">Começar a postar!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container"> 
+    <div class="row justify-content-center">
+        <div class="col-6"> 
+            @if(Model != null && Model.Any())
+            {
+                foreach (var blogPost in Model)
+                {
+                    <div class="mb-5 bg-light box-shadow rounded border p-4">
+                        <img src="@blogPost.FeaturedImageUrl" alt="@blogPost.Heading" class="mb-2 d-block img-fluid border rounded"/>  
+                    <h2 class="mb-2">@blogPost.Heading</h2>
+                    <p mb-4>
+                            @foreach (var tag in blogPost.Tags)
+                            {
+                                <span class="badge bg-black me-1">@tag.Name</span>
+                            }
+                    </p>
+                    <p class="mb-4">@blogPost.Author <br /> Publicado em: @blogPost.PublishedDate.ToShortDateString()</p>
+                    <p class="mb-5">@blogPost.ShortDescription</p>
+                    <a class="btn btn-dark mt-2 mb-3" asp-area="" asp-controller="Blogs" asp-route-urlHandle="@blogPost.UrlHandle">Ler mais</a>
+                    
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+

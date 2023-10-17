@@ -1,0 +1,53 @@
+﻿@model List<BlogAppetit.Web.Models.Domain.BlogPost> //tava a rebentar sem ser em lista faz sentido  esqueci me
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>Blog Posts Control Panel</h1>
+    </div>
+</div>
+
+<div class="container py-5">
+
+    @if(Model != null && Model.Any())
+    {
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Heading</td>
+                <td>Tags used</td>
+                <td>Edit</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var blogPost in Model)
+            {
+                <tr>
+                    <td>@blogPost.Id</td>
+                    <td>@blogPost.Heading</td>
+                    <td>
+                        <div class="d-flex">
+                            @foreach (var tag in blogPost.Tags)
+                            {
+                                <span class="badge bg-black me-1">@tag.Name</span>
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        <a asp-area="" asp-controller="BlogPosts" asp-action="Edit" asp-route-id="@blogPost.Id">
+                               <i class="fas fa-edit">Edit</i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+    else
+    {
+        <p>No blog posts found.</p>
+    }
+
+</div>

@@ -1,0 +1,102 @@
+﻿@model BlogAppetit.Web.Models.ViewModels.UserViewModel
+@{
+}
+
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>Painel de Controlo - Users</h1>
+    </div>
+</div>
+<div class="container mb-3 d-flex justify-content-center mt-4">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreateUser">
+        Criar Utilizador
+    </button>
+
+</div>
+<div>
+    <div class="container py-5">
+
+        @if (Model.Users != null || Model.Users.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Apagar</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <td>@user.Id</td>
+                            <td>@user.Username</td>
+                            <td>@user.Email</td>
+                            <td>
+                                @if(user.Username == User.Identity.Name)
+                                {
+                                    <button type="button" class="btn btn-danger" disabled>Apagar</button>
+                                }
+                                else
+                                {
+                                    <form method="post" asp-controller="AdminUsers" asp-action="Delete" asp-route-id="@user.Id">
+                                        <button type="submit" class="btn btn-danger">Apagar</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Não há utilizadores para apresentar.</p>
+        }
+    </div>
+</div>
+
+<form method="post">
+    <div class="modal fade" id="modalCreateUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Criar Novo User</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" asp-for="Username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" asp-for="Email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="" asp-for="Password">
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" value="User" id="chkUserRole" checked disabled />
+                            <label class="form-check-label" for="role">User</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="chkAdminRole" asp-for="AdminRole" />
+                            <label class="form-check-label" for="chkAdminRole">Admin</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

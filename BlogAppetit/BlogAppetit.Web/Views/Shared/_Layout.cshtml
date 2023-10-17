@@ -1,0 +1,105 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] BlogAppetit</title>
+    <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dl1rvdrha/image/upload/v1694689912/Blog_Appetit-logos_white_u7bo4q.png">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BlogAppetit.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+            <div class="container">
+                <a class="navbar-brand"  asp-area="" asp-controller="Home" asp-action="Index">
+
+                    <img src="https://res.cloudinary.com/dl1rvdrha/image/upload/v1694688487/Blog_Appetit-logos_black_zm9wrp.png" width="160" height="57" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="BlogPosts" asp-action="Add">Criar um post</a>
+                        </li>
+                        @if(SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Zona de Admin
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="AdminTags" asp-action="Add">Criar uma tag</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="AdminTags" asp-action="List">Gestão de tags</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" asp-controller="AdminUsers" asp-action="List">Lista de users</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="BlogPosts" asp-action="List">Gestão de posts</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="d-flex align-items-center">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <div class="me-4 text-dark">
+                                Olá, @User?.Identity?.Name 👋
+                            </div>
+                            <a class="btn me-3 bg-black text-light"
+                               asp-area=""
+                               asp-controller="Account"
+                               asp-action="Logout">Logout</a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-dark me-3">
+                                <a class="bg-dark text-light text-decoration-none"
+                                   asp-area=""
+                                   asp-controller="Account"
+                                   asp-action="Register">Registar</a>
+                            </button>
+                            <button class="btn btn-dark me-3" >
+                                <a class="bg-dark text-light text-decoration-none"
+                                   asp-area=""
+                                   asp-controller="Account"
+                                   asp-action="Login">Login</a>
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - BlogAppetit by Paulo Barros e Pedro Conceição - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
